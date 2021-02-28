@@ -85,7 +85,16 @@ def build_model():
         ]
     )
 
-    return pipeline
+    parameters = {
+        "vect__tokenizer": [None, tokenize],
+        "clf__estimator__multi_class": ["ovr", "crammer_singer"],
+        "clf__estimator__max_iter": [2000, 8000, 15000],
+        "clf__estimator__dual": [False, True],
+    }
+
+    cv = GridSearchCV(pipeline, param_grid=parameters, verbose=10)
+
+    return cv
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
