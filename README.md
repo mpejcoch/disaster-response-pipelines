@@ -1,6 +1,23 @@
 # Disaster Response Pipeline Project
+Communication is the key to coordination of efforts when a disaster strikes. To have a clear vision in
+such a situation, we need to extract useful information from the incoming messages. Otherwise we can easily
+be overwhelmed by the amounts of data coming in. This tool can help in the process. Trained on over 25 thousand preclassified images, the resulting model allows to categorize any new incoming text to a combination of 35 categories.
 
-### Instructions:
+```
+'related', 'request', 'offer', 'aid_related', 'medical_help',
+'medical_products', 'search_and_rescue', 'security', 'military',
+'water', 'food', 'shelter', 'clothing', 'money', 'missing_people',
+'refugees', 'death', 'other_aid', 'infrastructure_related', 'transport',
+'buildings', 'electricity', 'tools', 'hospitals', 'shops',
+'aid_centers', 'other_infrastructure', 'weather_related', 'floods',
+'storm', 'fire', 'earthquake', 'cold', 'other_weather',
+'direct_report'
+```
+
+### Libraries used
+See the `requirements.txt` file.
+
+### Deployment Instructions:
 1. Run the following commands in the project's root directory to set up your database and model.
 
     - To run ETL pipeline that cleans data and stores in database
@@ -12,3 +29,6 @@
     `python run.py`
 
 3. Go to http://0.0.0.0:3001/
+
+### Acknowledgements
+Thanks to Udacity for providing a skeleton of the application, which has made much easier to finish the project.
