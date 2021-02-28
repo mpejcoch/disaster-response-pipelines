@@ -5,6 +5,16 @@ from sqlalchemy import create_engine
 
 
 def load_data(messages_filepath, categories_filepath):
+    """Loads data from provided CSV files with messages and headers.
+    A data model specific to this application is expected.
+
+    Args:
+        messages_filepath (str): A path to the CSV file containing messages.
+        categories_filepath (str): A path to the CSV file containing categories of messages.
+
+    Returns:
+        pandas.DataFrame: A dataframe with combined information from both of the CSV files.
+    """
     messages = pd.read_csv(messages_filepath)
     categories = pd.read_csv(categories_filepath)
     df = messages.merge(categories, on="id")
@@ -12,6 +22,14 @@ def load_data(messages_filepath, categories_filepath):
 
 
 def clean_data(df):
+    """Clean duplicates and create dummy variables for categorical data
+
+    Args:
+        df (pandas.DataFrame): A dataframe with merged data from loaded CSV files
+
+    Returns:
+        pandas.DataFrame: Cleaned up data, that can be used for ML pipeline training.
+    """
     categories = df["categories"].str.split(";", expand=True)
     row = categories.iloc[0]
     category_colnames = row.apply(lambda s: s[:-2])
@@ -34,11 +52,18 @@ def clean_data(df):
 
 
 def save_data(df, database_filename):
+    """Store data in an SQLite database
+
+    Args:
+        df (pandas.DataFrame): A dataframe.
+        database_filename (str): Target SQLite database file name.
+    """
     engine = create_engine("sqlite:///{}".format(database_filename))
     df.to_sql("messages", engine, index=False)
 
 
 def main():
+    """Execute all the data processing steps in the correct order."""
     if len(sys.argv) == 4:
 
         messages_filepath, categories_filepath, database_filepath = sys.argv[1:]

@@ -18,6 +18,16 @@ from sklearn.pipeline import Pipeline
 
 
 def load_data(database_filepath):
+    """Load data from a provided database
+
+    Args:
+        database_filepath (str): Path to an SQLite database with training data.
+
+    Returns:
+        pandas.DataFrame: DataFrame containing incomming text messages.
+        pandas.DataFrame: DataFrame with classified categories.
+        list: A list of category names.
+    """
     engine = create_engine("sqlite:///{}".format(database_filepath))
     with engine.connect() as connection:
         df = pd.read_sql_table(table_name="messages", con=connection)
@@ -33,6 +43,14 @@ def load_data(database_filepath):
 
 
 def tokenize(text):
+    """Tokenize input text
+
+    Args:
+        text (str): Incomming message text.
+
+    Returns:
+        list: A list of cleaned up word tokens.
+    """
     url_regex = (
         "http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+"
     )
@@ -51,6 +69,11 @@ def tokenize(text):
 
 
 def build_model():
+    """Build a model pipeline
+
+    Returns:
+        sklearn.pipeline.Pipeline: NLP ML pipeline
+    """
     pipeline = Pipeline(
         [
             ("vect", CountVectorizer(tokenizer=tokenize)),
@@ -66,6 +89,17 @@ def build_model():
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
+    """Evaluate the model
+
+    Print a classification report based on data predicted by the model and
+    a test dataset.
+
+    Args:
+        model (sklearn.pipeline.Pipeline): A trained model that can call predict()
+        X_test (pandas.DataFrame): A test set of messages.
+        Y_test (pandas.DataFrame): A test set of categories.
+        category_names (list): A list of category names.
+    """
     y_pred = model.predict(X_test)
     y_pred_df = pd.DataFrame(y_pred)
     y_pred_df.columns = category_names
@@ -74,6 +108,12 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
 
 def save_model(model, model_filepath):
+    """Save the model to a file
+
+    Args:
+        model (sklearn.pipeline.Pipeline): The model to save.
+        model_filepath (str): A path to the Pickle formatted binary file.
+    """
     with open(model_filepath, "wb") as message_classifier_file:
         pickle.dump(model, message_classifier_file)
 
