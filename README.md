@@ -14,6 +14,9 @@ be overwhelmed by the amounts of data coming in. This tool can help in the proce
 'direct_report'
 ```
 
+### Test deployment
+Try out the app [here](https://disaster-response-pipelines.herokuapp.com/).
+
 ### Libraries used
 See the `requirements.txt` file.
 
