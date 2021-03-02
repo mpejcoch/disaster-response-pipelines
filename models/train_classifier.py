@@ -3,6 +3,7 @@ import pandas as pd
 import pickle
 import re
 import sys
+import pprint
 
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
@@ -86,10 +87,10 @@ def build_model():
     )
 
     parameters = {
-        "vect__tokenizer": [None, tokenize],
-        "clf__estimator__multi_class": ["ovr", "crammer_singer"],
-        "clf__estimator__max_iter": [2000, 8000, 15000],
-        "clf__estimator__dual": [False, True],
+        "vect__tokenizer": [None],
+        "clf__estimator__multi_class": ["crammer_singer"],
+        "clf__estimator__max_iter": [2000],
+        "clf__estimator__dual": [False],
     }
 
     cv = GridSearchCV(pipeline, param_grid=parameters, verbose=10)
@@ -143,6 +144,9 @@ def main():
 
         print("Training model...")
         model.fit(X_train, Y_train)
+
+        print("Best Parameters\n")
+        pprint.pprint(model.best_params_)
 
         print("Evaluating model...")
         evaluate_model(model, X_test, Y_test, category_names)
