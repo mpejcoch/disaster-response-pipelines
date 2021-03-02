@@ -2,6 +2,8 @@ import json
 import plotly
 import joblib
 import pandas as pd
+import sys
+import argparse
 
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
@@ -94,9 +96,12 @@ def go():
     )
 
 
-def main():
-    app.run(host="0.0.0.0", port=3001, debug=True)
+def main(argv):
+    parser = argparse.ArgumentParser(description="Start Web Application")
+    parser.add_argument("--port", default=3001, help="Port to listen on")
+    args = parser.parse_args()
+    app.run(host="0.0.0.0", port=args.port, debug=True)
 
 
 if __name__ == "__main__":
-    main()
+    main(sys.argv[1:])
