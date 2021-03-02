@@ -10,5 +10,4 @@ COPY . .
 RUN python data/process_data.py data/disaster_messages.csv data/disaster_categories.csv data/DisasterResponse.db
 RUN python models/train_classifier.py data/DisasterResponse.db models/classifier.pkl
 
-CMD ["python", "./app/run.py"]
-EXPOSE 3001
+CMD python ./app/run.py --port "$PORT"
