@@ -15,7 +15,7 @@ be overwhelmed by the amounts of data coming in. This tool can help in the proce
 ```
 
 ### Test deployment
-Try out the app [here](https://disaster-response-pipelines.herokuapp.com/).
+Try out the app [here](https://disaster-response-pipelines.herokuapp.com/). Note that when the app hasn't been used for an hour, Heroku will put it to sleep, so it takes up to 30s before it is usable. Subsequent reloads and usage perform normally.
 
 ### Libraries used
 See the `requirements.txt` file.
